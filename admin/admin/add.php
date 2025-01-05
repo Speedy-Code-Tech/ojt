@@ -16,7 +16,7 @@
 <body>
     <!-- Sidebar -->
     <?php
-     if(session_status()===PHP_SESSION_NONE) session_start();
+    if (session_status() === PHP_SESSION_NONE) session_start();
     $_SESSION["page"] = "admin_accounts";
     include("../sidebar.php");
     ?>
@@ -25,7 +25,7 @@
         <h2>ADD NEW ADMIN</h2>
         <hr>
         <div class="container-fluid">
-            <form action="#" method="post">
+            <form action="#" method="post" id="addAdminForm">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" required>
@@ -55,6 +55,13 @@
         $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
         $type = 'admin'; // Default user type for admin
 
+        // Validate email domain
+        if (!preg_match('/@lsu\.edu\.ph$/', $email)) {
+            $_SESSION['email_error'] = 'Email must end with @lsu.edu.ph!';
+            header('Location: add.php'); // Redirect back to the add admin page
+            exit;
+        }
+
         // Check if the email already exists
         $email_check_query = "SELECT * FROM user WHERE email = '$email'";
         $result = mysqli_query($conn, $email_check_query);
@@ -82,6 +89,7 @@
     }
     ?>
 
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

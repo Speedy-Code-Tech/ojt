@@ -27,6 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
     $type = 'dean'; // Default user type for admin
 
+    if (!preg_match('/@lsu\.edu\.ph$/', $email)) {
+        $_SESSION['email_error'] = 'Email must end with @lsu.edu.ph!';
+        header('Location: add.php'); // Redirect back to the add admin page
+        exit;
+    }
+
+    // Check if the email already exists
+    $email_check_query = "SELECT * FROM user WHERE email = '$email'";
+    $result = mysqli_query($conn, $email_check_query);
+    
+    if (mysqli_num_rows($result) > 0) {
+        // Email already exists
+        $_SESSION['email_error'] = 'Email is already taken!';
+        header('Location: add.php'); // Redirect back to the add admin page
+        exit;
+    }
+
     // Insert query
     $sql = "INSERT INTO user (email, password, type,department) VALUES ('$email', '$hashed_password', '$type','$department')";
 
@@ -61,6 +78,12 @@ $result = $conn->query("SELECT * FROM department");
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" required>
+                    <?php
+                    if (isset($_SESSION['email_error'])) {
+                        echo '<span class="text-danger">' . $_SESSION['email_error'] . '</span>';
+                        unset($_SESSION['email_error']);
+                    }
+                    ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>

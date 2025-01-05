@@ -69,9 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($pi_bdate)) {
         $errors['pi_bdate'] = "Birth Date is required.";
     }
-    if (empty($pi_contact)) {
-        $errors['pi_contact'] = "Contact Number is required.";
-    }
+    
     if (empty($pi_address)) {
         $errors['pi_address'] = "Home Address is required.";
     }
@@ -87,8 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($cdi_name)) {
         $errors['cdi_name'] = "Emergency Contact Name is required.";
     }
+    if (empty($pi_contact)) {
+        $errors['pi_contact'] = "Contact Number is required.";
+    } elseif (!preg_match('/^\d{11}$/', $pi_contact)) {
+        $errors['pi_contact'] = "Contact Number must be 11 digits long and contain only numbers.";
+    }
+    
     if (empty($cdi_contact)) {
         $errors['cdi_contact'] = "Emergency Contact Number is required.";
+    } elseif (!preg_match('/^\d{11}$/', $cdi_contact)) {
+        $errors['cdi_contact'] = "Emergency Contact Number must be 11 digits long and contain only numbers.";
     }
     if (empty($cdi_address)) {
         $errors['cdi_address'] = "Emergency Contact Address is required.";
