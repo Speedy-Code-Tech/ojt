@@ -394,7 +394,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                         </div>
                         <div class="container">
                             <div class="form-wrap">
-                                <label for="cdi_com_address">Company Address</label>
+                                <label for="cdi_com_address">Company Address(Optional)</label>
                                 <input class="form-input" type="text" name="cdi_com_address" id="cdi_com_address" value="<?= $_SESSION['cdi_com_address'] ?? '' ?>">
                             </div>
                             <?php if (!empty($_SESSION['errors']['cdi_com_address1'])): ?>
