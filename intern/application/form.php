@@ -259,7 +259,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_contact">Contact Number</label>
-                                    <input class="form-input" maxlength='11' type="number" name="pi_contact" id="pi_contact" value="<?= $_SESSION['pi_contact'] ?? '' ?>">
+                                    <input class="form-input" minlength="11" maxlength='11' type="number" name="pi_contact" id="pi_contact" value="<?= $_SESSION['pi_contact'] ?? '' ?>">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_contact'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_contact'] ?></p>
@@ -375,7 +375,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="cdi_contact">Contact Number</label>
-                                    <input class="form-input" maxlength='11' type="number" name="cdi_contact" id="cdi_contact" value="<?= $_SESSION['cdi_contact'] ?? '' ?>">
+                                    <input class="form-input" minlength="11" maxlength='11' type="number" name="cdi_contact" id="cdi_contact" value="<?= $_SESSION['cdi_contact'] ?? '' ?>">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['cdi_contact'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['cdi_contact'] ?></p>

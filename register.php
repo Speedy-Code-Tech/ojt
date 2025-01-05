@@ -53,7 +53,7 @@ unset($_SESSION['errors'], $_SESSION['old']);
                 <h2 class="">REGISTER</h2>
                 <form class="form-container" method="post" action="backend/register.php">
                     <label for="email">Email</label>
-                    <input type="text" required id="email" class="m-0" name="email" placeholder="juan@lsu.edu.ph"
+                    <input type="text" required id="email" class="m-0" name="email" placeholder="firstname.lastname@lsu.edu.ph"
                         pattern="^[a-zA-Z0-9._%+-]+@lsu\.edu\.ph$"
                         title="Must be a valid LSU email (e.g., juan@lsu.edu.ph)"
                         value="<?= htmlspecialchars($old['email'] ?? '') ?>">

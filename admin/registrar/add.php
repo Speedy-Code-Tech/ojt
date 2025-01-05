@@ -29,7 +29,7 @@
             <form action="#" method="post">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" required>
+                    <input type="email" name="email" placeholder="firstname.lastname@lsu.edu.ph" class="form-control" id="email" required>
                     <?php
                     if (isset($_SESSION['email_error'])) {
                         echo '<span class="text-danger">' . $_SESSION['email_error'] . '</span>';

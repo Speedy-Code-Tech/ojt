@@ -24,7 +24,7 @@ if(session_status() == PHP_SESSION_NONE) session_start();
                 <h2 class="text-white">LOGIN</h2>
                 <form class="form-container" method="post" action="backend/login.php" onsubmit="return validateForm()">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="juan@lsu.edu.ph"
+                    <input type="text" id="email" name="email" placeholder="firstname.lastname@lsu.edu.ph"
                          title="Must be a valid LSU email (e.g., juan@lsu.edu.ph)">
                     <div class="note">Must be LSU email</div>
                     <span id="emailError" class="text-danger"></span> <!-- Error message for email -->
