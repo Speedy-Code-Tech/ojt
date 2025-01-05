@@ -10,6 +10,14 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
     if (mysqli_query($conn, $query)) {
         $_SESSION['status'] = 'success';
         $_SESSION['message'] = 'Step 3 UPDATED successfully!';
+        $email = $conn->query("SELECT * FROM application_table WHERE application_id = $id");
+        $em = '';
+        while ($r = $email->fetch_assoc()) {
+            $em = $r['pi_email'];
+        }
+        $_SESSION['user_email'] = $em;
+        $_SESSION['msg'] = "Congratulation! You finished your Internship <3!";
+    
     } else {
         $_SESSION['status'] = 'error';
         $_SESSION['message'] = 'Error: ' . mysqli_error($conn);

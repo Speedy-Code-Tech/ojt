@@ -93,6 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($cdi_address)) {
         $errors['cdi_address'] = "Emergency Contact Address is required.";
     }
+    if (empty($cdi_com_address)) {
+        $errors['cdi_com_address1'] = "Contact Address is required.";
+    }
 
     // If there are errors, store them in session and redirect back
     if (!empty($errors)) {

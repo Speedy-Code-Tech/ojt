@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OJT System - Admin Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="/../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://kit.fontawesome.com/6226269109.js" crossorigin="anonymous"></script>
@@ -13,6 +13,9 @@
 
 </head>
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+if (session_status() == PHP_SESSION_NONE) session_start();
 require_once('step1.php');
 require_once('after.php');
 // Query to get the latest announcement from the database
@@ -37,18 +40,23 @@ if ($user && mysqli_num_rows($user) > 0) {
 } else {
     $data = null;
 }
-$data = mysqli_real_escape_string($conn, $data);
+$count = 0;
+if ($data) {
+    $data = mysqli_real_escape_string($conn, $data);
+
+    $tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 4 AND pi_dept = '$data'");
+
+
+
+    while ($row = mysqli_fetch_assoc($tables)) {
+        $count = $count + 1;
+    }
+}
 $admin = $conn->query("SELECT * FROM user WHERE type='admin'");
 $adviser = $conn->query("SELECT * FROM user WHERE type='adviser'");
 $intern = $conn->query("SELECT * FROM user WHERE type='intern'");
 $dean = $conn->query("SELECT * FROM user WHERE type='dean'");
 
-$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 4 AND pi_dept = '$data'");
-
-$count = 0;
-while ($row = mysqli_fetch_assoc($tables)) {
-    $count = $count + 1;
-}
 $adviser_count = 0;
 while ($row = mysqli_fetch_assoc($adviser)) {
     $adviser_count = $adviser_count + 1;
@@ -65,13 +73,16 @@ $dean_count = 0;
 while ($row = mysqli_fetch_assoc($dean)) {
     $dean_count = $dean_count + 1;
 }
+
 ?>
 
 <body>
     <!-- Sidebar -->
     <?php
-        $_SESSION['page'] = 'dashboard';
-        include("sidebar.php") ;
+
+
+    // $_SESSION['page'] = 'dashboard';
+    include("sidebar.php");
     ?>
 
     <!-- Main Content -->
@@ -115,10 +126,15 @@ while ($row = mysqli_fetch_assoc($dean)) {
 
         <div class="announcement">
             <h3>ANNOUNCEMENTS</h3>
-            <div>
-                <span class="fw-bold">Date Announced:</span> <?php echo date("F d, Y", strtotime($announcement['date_created'])); ?>
-            </div>
-            <p class="ps-5 pt-3"><?= $announcement['message']; ?></p>
+            <?php if ($announcement) { ?>
+                <div>
+                    <span class="fw-bold">Date Announced:</span> <?php echo date("F d, Y", strtotime($announcement['date_created'])); ?>
+                </div>
+                <p class="ps-5 pt-3"><?= $announcement['message']; ?></p>
+            <?php } else { ?>
+                <p class="container-fluid ps-5 pt-3 text-warning text-warning">----- No Annnouncement Today -----</p>
+
+            <?php } ?>
         </div>
         <hr>
         <div class="container-fluid d-flex flex-column gap-5 pt-5 mt-5">
@@ -151,7 +167,7 @@ while ($row = mysqli_fetch_assoc($dean)) {
                     <h4 class="text-center">After OJT Step 1 Intern Process</h4>
                     <canvas width="50%" id="afterstep1Chart" data-approve="<?= $afterapprove ?>" data-pending="<?= $afterpending ?>" data-decline="<?= $afterdecline ?>"></canvas>
                 </div>
-                
+
 
             </div>
             <div class="container-fluid d-flex gap-3">
@@ -163,7 +179,7 @@ while ($row = mysqli_fetch_assoc($dean)) {
                     <h4 class="text-center">After OJT Step 3 Intern Process</h4>
                     <canvas width="50%" id="afterstep3Chart" data-approve="<?= $afterapprove3 ?>" data-pending="<?= $afterpending3 ?>" data-decline="<?= $afterdecline3 ?>"></canvas>
                 </div>
-                
+
 
             </div>
         </div>
@@ -462,7 +478,7 @@ while ($row = mysqli_fetch_assoc($dean)) {
         });
     </script>
 
-<script>
+    <script>
         const afterstepCanvas2 = document.getElementById('afterstep2Chart');
 
         // Fetch data from data attributes
@@ -510,7 +526,7 @@ while ($row = mysqli_fetch_assoc($dean)) {
         });
     </script>
 
-<script>
+    <script>
         const afterstepCanvas3 = document.getElementById('afterstep3Chart');
 
         // Fetch data from data attributes

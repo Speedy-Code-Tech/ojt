@@ -21,39 +21,57 @@
     include("../sidebar.php");
     ?>
     <?php
-    if(session_status() === PHP_SESSION_NONE) session_start();
-    require('../../backend/db_connect.php');
-    // Display success or error messages using SweetAlert
-    if (isset($_SESSION['status'])) {
-        $status = $_SESSION['status'];
-        $message = $_SESSION['message'];
+if (session_status() === PHP_SESSION_NONE) session_start();
+require('../../backend/db_connect.php');
 
+// Display success or error messages using SweetAlert
+if (isset($_SESSION['status'])) {
+    $status = $_SESSION['status'];
+    $message = $_SESSION['message'];
+
+    echo "
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: '$status',
+                title: '$message',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>";
+    unset($_SESSION['status']);
+    unset($_SESSION['message']);
+}
+
+// Get filter values from GET request
+$fromYear = isset($_GET['from_year']) ? $_GET['from_year'] : '';
+$toYear = isset($_GET['to_year']) ? $_GET['to_year'] : '';
+
+if ($fromYear && $toYear) {
+    if ($fromYear == $toYear) {
         echo "
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    icon: '$status',
-                    title: '$message',
+                    icon: 'error',
+                    title: 'Invalid Filter',
+                    text: 'The selected years must be different.',
                     confirmButtonText: 'OK'
                 });
             });
         </script>";
-        unset($_SESSION['status']);
-        unset($_SESSION['message']);
+    } else {
+        // Build SQL query with filtering
+        $query = "SELECT * FROM application_table WHERE start_date BETWEEN '$fromYear-01-01' AND '$toYear-12-31'";
+        $result = $conn->query($query);
     }
-
-    // Get filter values from GET request
-    $fromYear = isset($_GET['from_year']) ? $_GET['from_year'] : '';
-    $toYear = isset($_GET['to_year']) ? $_GET['to_year'] : '';
-
-    // Build SQL query with filtering
+} else {
+    // Default query without filtering
     $query = "SELECT * FROM application_table";
-    if ($fromYear && $toYear) {
-        $query .= " WHERE start_date BETWEEN '$fromYear-01-01' AND '$toYear-12-31'";
-    }
-
     $result = $conn->query($query);
-    ?>
+}
+?>
+
     <!-- Main Content -->
     <div class="dashboard">
         <h2>VIEW INTERN HISTORY</h2>

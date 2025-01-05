@@ -88,7 +88,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                 <div class="container">
                                     <div class="form-wrap">
                                         <label for="start_year">Start Year</label>
-                                        <select class="form-input" id="start_year" name="start_year" ></select>
+                                        <select class="form-input" id="start_year" name="start_year"></select>
                                     </div>
                                     <?php if (!empty($_SESSION['errors']['start_year'])): ?>
                                         <p class="error-message"><?= $_SESSION['errors']['start_year'] ?></p>
@@ -97,7 +97,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                 <div class="container">
                                     <div class="form-wrap">
                                         <label for="end_year">End Year</label>
-                                        <select class="form-input" id="end_year" name="end_year" ></select>
+                                        <select class="form-input" id="end_year" name="end_year"></select>
                                     </div>
                                     <?php if (!empty($_SESSION['errors']['end_year'])): ?>
                                         <p class="error-message"><?= $_SESSION['errors']['end_year'] ?></p>
@@ -112,13 +112,13 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                 <h2>Personal Information</h2>
                             </div>
                         </div>
-                        <input class="form-input" type="hidden" name="user_id" id="user_id" >
+                        <input class="form-input" type="hidden" name="user_id" id="user_id">
 
                         <div class="form-groups">
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_fname">First Name</label>
-                                    <input class="form-input" type="text" name="pi_fname" id="pi_fname" >
+                                    <input class="form-input" type="text" name="pi_fname" id="pi_fname">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_fname'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_fname'] ?></p>
@@ -127,7 +127,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_mname">Middle Name</label>
-                                    <input class="form-input" type="text" name="pi_mname" id="pi_mname" >
+                                    <input class="form-input" type="text" name="pi_mname" id="pi_mname">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_mname'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_mname'] ?></p>
@@ -139,7 +139,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_lname">Last Name</label>
-                                    <input class="form-input" type="text" name="pi_lname" id="pi_lname" >
+                                    <input class="form-input" type="text" name="pi_lname" id="pi_lname">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_lname'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_lname'] ?></p>
@@ -148,7 +148,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="select-wrap">
                                     <label for="pi_dept">Department</label>
-                                    <select name="pi_dept" id="pi_dept" class="form-control"  onchange="fetchPrograms()">
+                                    <select name="pi_dept" id="pi_dept" class="form-control" onchange="fetchPrograms()">
                                         <option value="" disabled selected>Select Department</option>
                                         <?php
                                         while ($row = $result->fetch_assoc()) {
@@ -167,7 +167,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="select-wrap">
                                     <label for="pi_course">Program</label>
-                                    <select name="pi_course" id="pi_course" class="form-control" >
+                                    <select name="pi_course" id="pi_course" class="form-control">
                                         <option value="" disabled selected>Select Program</option>
                                     </select>
                                 </div>
@@ -178,7 +178,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="select-wrap">
                                     <label for="pi_year_lv">Year Level</label>
-                                    <select name="pi_year_lv" id="pi_year_lv" >
+                                    <select name="pi_year_lv" id="pi_year_lv">
                                         <option value="" selected>Select Year Level</option>
                                         <option value="1">1st Year</option>
                                         <option value="2">2nd Year</option>
@@ -196,7 +196,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="select-wrap">
                                     <label for="pi_gender">Gender</label>
-                                    <select name="pi_gender" id="pi_gender" >
+                                    <select name="pi_gender" id="pi_gender">
                                         <option value="" selected>Select Gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -209,7 +209,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_age">Age</label>
-                                    <input class="form-input" type="number" maxlength='2' name="pi_age" id="pi_age" >
+                                    <input class="form-input" type="number" maxlength='2' name="pi_age" id="pi_age">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_age'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_age'] ?></p>
@@ -220,7 +220,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="select-wrap">
                                     <label for="pi_civil_status">Civil Status</label>
-                                    <select name="pi_civil_status" id="pi_civil_status" >
+                                    <select name="pi_civil_status" id="pi_civil_status">
                                         <option value="" selected>Select Civil Status</option>
                                         <option value="Single">Single</option>
                                         <option value="Married">Married</option>
@@ -235,7 +235,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="date-wrap">
                                     <label for="pi_bdate">Birth Date</label>
-                                    <input class="form-input" type="date" name="pi_bdate" id="pi_bdate" >
+                                    <input class="form-input" type="date" name="pi_bdate" id="pi_bdate">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_bdate'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_bdate'] ?></p>
@@ -246,7 +246,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_contact">Contact Number</label>
-                                    <input class="form-input" maxlength='11' type="number" name="pi_contact" id="pi_contact" >
+                                    <input class="form-input" maxlength='11' type="number" name="pi_contact" id="pi_contact">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_contact'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_contact'] ?></p>
@@ -255,7 +255,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_email">Email Address</label>
-                                    <input class="form-input email-input" type="text" name="pi_email" id="pi_email"  readonly value="<?= ($email['email']); ?>">
+                                    <input class="form-input email-input" type="text" name="pi_email" id="pi_email" readonly value="<?= ($email['email']); ?>">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_email'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_email'] ?></p>
@@ -266,7 +266,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="pi_address">Home Address</label>
-                                    <input class="form-input" type="text" name="pi_address" id="pi_address" >
+                                    <input class="form-input" type="text" name="pi_address" id="pi_address">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['pi_address'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['pi_address'] ?></p>
@@ -284,7 +284,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="ptd_establishment">Training Establishment</label>
-                                    <input class="form-input" type="text" name="ptd_establishment" id="ptd_establishment" >
+                                    <input class="form-input" type="text" name="ptd_establishment" id="ptd_establishment">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['ptd_establishment'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['ptd_establishment'] ?></p>
@@ -293,7 +293,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="ptd_address">Address</label>
-                                    <input class="form-input" type="text" name="ptd_address" id="ptd_address" >
+                                    <input class="form-input" type="text" name="ptd_address" id="ptd_address">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['ptd_address'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['ptd_address'] ?></p>
@@ -313,11 +313,24 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="ptd_training_hrs">Duration of Training Hours</label>
-                                    <input class="form-input" type="number" name="ptd_training_hrs" id="ptd_training_hrs" >
+                                    <input class="form-input" type="number" name="ptd_training_hrs" id="ptd_training_hrs">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['ptd_training_hrs'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['ptd_training_hrs'] ?></p>
                                 <?php endif; ?>
+                            </div>
+
+                        </div>
+
+                        <div class="form-groups">
+                            <div class="date-wrap">
+                                <label>Start Date (Optional)</label>
+                                <input class="form-input from-date" type="date" name="ptd_start_date" id="ptd_start_date">
+
+                            </div>
+                            <div class="date-wrap">
+                                <label>End Date (Optional)</label>
+                                <input class="form-input to-date" type="date" name="ptd_end_date" id="ptd_end_date">
                             </div>
                         </div>
 
@@ -331,34 +344,50 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="cdi_name">Full Name</label>
-                                    <input class="form-input" type="text" name="cdi_name" id="cdi_name" >
+                                    <input class="form-input" type="text" name="cdi_name" id="cdi_name">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['cdi_name'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['cdi_name'] ?></p>
                                 <?php endif; ?>
                             </div>
-                            
-                            
+                            <div class="container">
+                                <div class="form-wrap">
+                                    <label for="cdi_relationship">Relationship</label>
+                                    <input class="form-input"  type="text" name="cdi_relationship" id="cdi_relationship">
+                                </div>
+                                <?php if (!empty($_SESSION['errors']['cdi_relationship'])): ?>
+                                    <p class="error-message"><?= $_SESSION['errors']['cdi_relationship'] ?></p>
+                                <?php endif; ?>
+                            </div>
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="cdi_contact">Contact Number</label>
-                                    <input class="form-input" maxlength='11' type="number" name="cdi_contact" id="cdi_contact" >
+                                    <input class="form-input" maxlength='11' type="number" name="cdi_contact" id="cdi_contact">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['cdi_contact'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['cdi_contact'] ?></p>
                                 <?php endif; ?>
                             </div>
-                            <div class="container">
+                            
+                        </div>
+                        <div class="container">
                                 <div class="form-wrap">
-                                    <label for="cdi_address">Address</label>
-                                    <input class="form-input" type="text" name="cdi_address" id="cdi_address" >
+                                    <label for="cdi_com_address">Address</label>
+                                    <input class="form-input" type="text" name="cdi_address" id="cdi_address">
                                 </div>
                                 <?php if (!empty($_SESSION['errors']['cdi_address'])): ?>
                                     <p class="error-message"><?= $_SESSION['errors']['cdi_address'] ?></p>
                                 <?php endif; ?>
                             </div>
-                        </div>
-
+                            <div class="container">
+                                <div class="form-wrap">
+                                    <label for="cdi_com_address">Company Address</label>
+                                    <input class="form-input" type="text" name="cdi_com_address" id="cdi_com_address">
+                                </div>
+                                <?php if (!empty($_SESSION['errors']['cdi_com_address1'])): ?>
+                                    <p class="error-message"><?= $_SESSION['errors']['cdi_com_address1'] ?></p>
+                                <?php endif; ?>
+                            </div>
                         <!-- Submit Button -->
                         <div class="btn-area">
                             <button class="add-account-btn" type="submit">Submit</button>

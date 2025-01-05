@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: view.php'); // Redirect to the admin accounts view page
     exit;
 }
-$result = $conn->query("SELECT * FROM department");
+$result12 = $conn->query("SELECT * FROM department");
 $results = $conn->query("SELECT * FROM programs");
 
 ?>
@@ -73,7 +73,7 @@ $results = $conn->query("SELECT * FROM programs");
                     <select name="department" class="form-select" id="department" required>
                         <option value="" disabled selected>Select Department</option>
                         <?php
-                        while ($row = $result->fetch_assoc()) {
+                        while ($row = $result12->fetch_assoc()) {
                             echo '<option value="' . htmlspecialchars($row['dept']) . '">' . htmlspecialchars($row['dept']) . '</option>';
                         }
                         ?>

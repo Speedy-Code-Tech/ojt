@@ -29,6 +29,12 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" required>
+                    <?php
+                    if (isset($_SESSION['email_error'])) {
+                        echo '<span class="text-danger">' . $_SESSION['email_error'] . '</span>';
+                        unset($_SESSION['email_error']);
+                    }
+                    ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -40,7 +46,7 @@
     </div>
 
     <?php
-    session_start();
+
     require('../../backend/db_connect.php');
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,6 +54,17 @@
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
         $type = 'admin'; // Default user type for admin
+
+        // Check if the email already exists
+        $email_check_query = "SELECT * FROM user WHERE email = '$email'";
+        $result = mysqli_query($conn, $email_check_query);
+        
+        if (mysqli_num_rows($result) > 0) {
+            // Email already exists
+            $_SESSION['email_error'] = 'Email is already taken!';
+            header('Location: add.php'); // Redirect back to the add admin page
+            exit;
+        }
 
         // Insert query
         $sql = "INSERT INTO user (email, password, type) VALUES ('$email', '$hashed_password', '$type')";
@@ -64,6 +81,7 @@
         exit;
     }
     ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

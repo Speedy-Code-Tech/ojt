@@ -72,8 +72,8 @@ $query = "SELECT * FROM application_table WHERE user_id = $id";
 $result12 = mysqli_query($conn, $query);
 $steps  = 0;
 $status  = "";
-if ($result12 && mysqli_num_rows($result12)>0){
-    while($row = mysqli_fetch_assoc($result12)){
+if ($result12 && mysqli_num_rows($result12) > 0) {
+    while ($row = mysqli_fetch_assoc($result12)) {
         $steps = $row['application_step'];
         $status = $row['application_status'];
     }
@@ -84,7 +84,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
     <!-- Sidebar -->
     <div class="sidebar">
         <h4 class="text-center py-3">OJT System</h4>
-        <a href="../dashboard.php" ><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="../dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="#" class="active"><i class="fa-solid fa-boxes-stacked"></i> Application Status</a>
         <a href="../after/status.php" class="ms-3 <?= ($steps == 5 && $status == 'ACCEPTED') ? 'd-block' : 'd-none' ?> ps-0"><i class="fa-solid fa-boxes-stacked"></i> After OJT</a>
 
@@ -96,8 +96,8 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
         <div class="container-fluid">
             <div class="main-content container-fluid d-flex justify-content-center align-items-center">
-                
-                <?php if ($step == 0 && $application['application_status'] == 'PENDING') { ?>
+
+                <?php if ($step == 0 && $application['application_status'] == 'PENDING' && $application) { ?>
                     <div class="pending-message-step-intern-info card">
                         <div class="progress-area">
                             <div class="progress-wrapper">
@@ -145,7 +145,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
                     </div>
 
-                <?php } else if ($step == 0 && $application['application_status'] == 'DECLINED') { ?>
+                <?php } else if ($step == 0 && $application['application_status'] == 'DECLINED' && $application) { ?>
 
                     <div class="declined-message-step-intern-info card">
 
@@ -198,7 +198,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
 
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'PENDING') { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'PENDING' && $application) { ?>
 
                     <div class="pending-message-step-1 card">
                         <div class="progress-area">
@@ -269,7 +269,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
                         </div>
 
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'ACCEPTED') { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
 
                     <div class="accepted-message-step-1 card">
                         <div class="progress-area">
@@ -315,7 +315,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
                             <h6>Your submitted form for step 1 has been verified; to proceed to step 2, please click <span style="color: rgb(99, 226, 99)"><a href="submit-application-step-2.html">here</a></span>.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'DECLINED') { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'DECLINED' && $application) { ?>
 
                     <div class="declined-message-step-1 card">
                         <div class="progress-area">
@@ -391,7 +391,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
 
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'PENDING') { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'PENDING' && $application) { ?>
                     <div class="pending-message-step-2 card">
 
                         <div class="progress-area">
@@ -483,7 +483,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
                         </div>
 
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'ACCEPTED') { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
 
                     <div class="accepted-message-step-2 card">
                         <div class="progress-area">
@@ -529,7 +529,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
                             <h6>Your submitted form for step 2 has been verified; to proceed to step 3, please click <span style="color: rgb(99, 226, 99)"><a href="submit-application-step-3.html">here</a></span>.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'DECLINED') { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'DECLINED' && $application) { ?>
 
                     <div class="declined-message-step-2 card">
                         <div class="progress-area">
@@ -635,7 +635,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'PENDING') { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'PENDING' && $application) { ?>
 
 
                     <div class="pending-message-step-3 card">
@@ -722,7 +722,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'DECLINED') { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'DECLINED' && $application) { ?>
 
 
 
@@ -812,7 +812,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'ACCEPTED') { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
 
 
                     <div class="accepted-message-step-3 card">
@@ -860,161 +860,161 @@ if ($result12 && mysqli_num_rows($result12)>0){
                         </div>
 
                     </div>
-                    <?php } else if ($step == 4 && $application['application_status'] == 'PENDING') { ?>
+                <?php } else if ($step == 4 && $application['application_status'] == 'PENDING' && $application) { ?>
 
 
-<div class="pending-message-step-3 card">
-    <div class="progress-area">
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Info</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 1</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 2</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 3</a>
-        </div>
+                    <div class="pending-message-step-3 card">
+                        <div class="progress-area">
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Info</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 1</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 2</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 3</a>
+                            </div>
 
-        <div class="progress-wrapper">
-            <div class="progress-circle pending-active">
-                <i class="fa-regular fa-hourglass-start"></i>
-            </div>
-            <a href="#">Step 4</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle">
-                <i class="fa-regular fa-clock"></i>
-            </div>
-            <a href="#">Step 5</a>
-        </div>
-    </div>
-    <div class="content-area">
-        <i class="fa-solid fa-hourglass-start big-icon pending-icon"></i>
-        <h6>Your application is still being process for step 4. You can still update your dean in regards to this</span></h6>
-    </div>
-
- 
-
-
-</div>
-<?php } else if ($step == 4 && $application['application_status'] == 'DECLINED') { ?>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle pending-active">
+                                    <i class="fa-regular fa-hourglass-start"></i>
+                                </div>
+                                <a href="#">Step 4</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <a href="#">Step 5</a>
+                            </div>
+                        </div>
+                        <div class="content-area">
+                            <i class="fa-solid fa-hourglass-start big-icon pending-icon"></i>
+                            <h6>Your application is still being process for step 4. You can still update your dean in regards to this</span></h6>
+                        </div>
 
 
 
-<div class="declined-message-step-3 card">
-    <div class="progress-area">
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Info</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 1</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 2</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 3</a>
-        </div>
 
-        <div class="progress-wrapper">
-            <div class="progress-circle deny-active">
-                <i class="fa-regular fa-x"></i>
-            </div>
-            <a href="#">Step 4</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle">
-                <i class="fa-regular fa-clock"></i>
-            </div>
-            <a href="#">Step 5</a>
-        </div>
-    </div>
-    <div class="content-area">
-        <i class="fa-solid fa-x big-icon deny-icon"></i>
-        <h6>The form you've submitted for step 4 has been denied.</span>.</h6>
-    </div>
-
- 
-
-</div>
-<?php } else if ($step == 4 && $application['application_status'] == 'ACCEPTED') { ?>
+                    </div>
+                <?php } else if ($step == 4 && $application['application_status'] == 'DECLINED' && $application) { ?>
 
 
-<div class="accepted-message-step-3 card">
-    <div class="progress-area">
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Info</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 1</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 2</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <a href="#">Step 3</a>
-        </div>
 
-        <div class="progress-wrapper">
-            <div class="progress-circle success-active">
-                <i class="fa-regular fa-check"></i>
-            </div>
-            <a href="#">Step 4</a>
-        </div>
-        <div class="progress-wrapper">
-            <div class="progress-circle pending-active">
-                <i class="fa-regular fa-hourglass-start"></i>
-            </div>
-            <a href="#">Step 5</a>
-        </div>
-    </div>
-    <div class="content-area">
-        <i class="fa-solid fa-hourglass-start big-icon pending-icon"></i>
-        <h6>Your application for step 4 has been veified. Please wait for the approval of the adviser.</h6>
-    </div>
+                    <div class="declined-message-step-3 card">
+                        <div class="progress-area">
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Info</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 1</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 2</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 3</a>
+                            </div>
 
-</div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle deny-active">
+                                    <i class="fa-regular fa-x"></i>
+                                </div>
+                                <a href="#">Step 4</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <a href="#">Step 5</a>
+                            </div>
+                        </div>
+                        <div class="content-area">
+                            <i class="fa-solid fa-x big-icon deny-icon"></i>
+                            <h6>The form you've submitted for step 4 has been denied.</span>.</h6>
+                        </div>
 
-                    <?php } else if ($step == 5 && $application['application_status'] == 'PENDING') { ?>
+
+
+                    </div>
+                <?php } else if ($step == 4 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+
+
+                    <div class="accepted-message-step-3 card">
+                        <div class="progress-area">
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Info</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 1</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 2</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <a href="#">Step 3</a>
+                            </div>
+
+                            <div class="progress-wrapper">
+                                <div class="progress-circle success-active">
+                                    <i class="fa-regular fa-check"></i>
+                                </div>
+                                <a href="#">Step 4</a>
+                            </div>
+                            <div class="progress-wrapper">
+                                <div class="progress-circle pending-active">
+                                    <i class="fa-regular fa-hourglass-start"></i>
+                                </div>
+                                <a href="#">Step 5</a>
+                            </div>
+                        </div>
+                        <div class="content-area">
+                            <i class="fa-solid fa-hourglass-start big-icon pending-icon"></i>
+                            <h6>Your application for step 4 has been veified. Please wait for the approval of the adviser.</h6>
+                        </div>
+
+                    </div>
+
+                <?php } else if ($step == 5 && $application['application_status'] == 'PENDING' && $application) { ?>
 
                     <div class="accepted-message-step-4 card">
                         <div class="progress-area">
@@ -1060,7 +1060,7 @@ if ($result12 && mysqli_num_rows($result12)>0){
                             <h6>You are now approved by the college dean. Please wait for the approval of the adviser.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 5 && $application['application_status'] == 'ACCEPTED') { ?>
+                <?php } else if ($step == 5 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
 
                     <div class="accepted-message-step-5 card">
                         <div class="progress-area">
@@ -1161,111 +1161,110 @@ if ($result12 && mysqli_num_rows($result12)>0){
         });
     </script>
     <script>
-        $(document).ready(function () {
-    $('#edit_form_step2').on('submit', function (e) {
-        e.preventDefault(); // Prevent default form submission
+        $(document).ready(function() {
+            $('#edit_form_step2').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
 
-        var step2DocsLink = $('#step2_docs_link').val();
-        
-        // Validate the G-Link URL
-        if (!step2DocsLink) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Please enter the G-Link URL.',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
+                var step2DocsLink = $('#step2_docs_link').val();
 
-        // AJAX request
-        $.ajax({
-            url: 'update_step2.php', // The PHP file that will handle the update
-            type: 'POST',
-            data: {
-                step2_docs_link: step2DocsLink
-            },
-            dataType:'json',
-            success: function (response) {
-                console.log(response.status)
-                // Handle the success response from PHP
-                if (response.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: response.message,
-                        confirmButtonText: 'OK'
-                    });
-                } else {
+                // Validate the G-Link URL
+                if (!step2DocsLink) {
                     Swal.fire({
                         icon: 'error',
-                        title: "Error Na",
+                        title: 'Please enter the G-Link URL.',
                         confirmButtonText: 'OK'
                     });
+                    return;
                 }
-                $('#exampleModal2').modal('hide')
-            },
-            error: function () {
-                // Handle any errors in the AJAX request
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Something went wrong. Please try again.',
-                    confirmButtonText: 'OK'
+
+                // AJAX request
+                $.ajax({
+                    url: 'update_step2.php', // The PHP file that will handle the update
+                    type: 'POST',
+                    data: {
+                        step2_docs_link: step2DocsLink
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response.status)
+                        // Handle the success response from PHP
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Error Na",
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                        $('#exampleModal2').modal('hide')
+                    },
+                    error: function() {
+                        // Handle any errors in the AJAX request
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 });
-            }
-        });
-    });
-    $('#edit_form_step3').on('submit', function (e) {
-        e.preventDefault(); // Prevent default form submission
-
-        var step3DocsLink = $('#step3_docs_link').val();
-        
-        // Validate the G-Link URL
-        if (!step3DocsLink) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Please enter the G-Link URL.',
-                confirmButtonText: 'OK'
             });
-            return;
-        }
+            $('#edit_form_step3').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
 
-        // AJAX request
-        $.ajax({
-            url: 'update_step3.php', // The PHP file that will handle the update
-            type: 'POST',
-            data: {
-                step3_docs_link: step3DocsLink
-            },
-            dataType:'json',
-            success: function (response) {
-                console.log(response.status)
-                // Handle the success response from PHP
-                if (response.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: response.message,
-                        confirmButtonText: 'OK'
-                    });
-                } else {
+                var step3DocsLink = $('#step3_docs_link').val();
+
+                // Validate the G-Link URL
+                if (!step3DocsLink) {
                     Swal.fire({
                         icon: 'error',
-                        title: "Error Na",
+                        title: 'Please enter the G-Link URL.',
                         confirmButtonText: 'OK'
                     });
+                    return;
                 }
-                $('#exampleModal3').modal('hide')
-            },
-            error: function () {
-                // Handle any errors in the AJAX request
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Something went wrong. Please try again.',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
-    });
-});
 
+                // AJAX request
+                $.ajax({
+                    url: 'update_step3.php', // The PHP file that will handle the update
+                    type: 'POST',
+                    data: {
+                        step3_docs_link: step3DocsLink
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response.status)
+                        // Handle the success response from PHP
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Error Na",
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                        $('#exampleModal3').modal('hide')
+                    },
+                    error: function() {
+                        // Handle any errors in the AJAX request
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Something went wrong. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            });
+        });
     </script>
 
 </body>

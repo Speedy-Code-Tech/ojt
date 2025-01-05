@@ -91,10 +91,15 @@ while ($row = mysqli_fetch_assoc($tables1)) {
 
         <div class="announcement">
         <h2>Announcements</h2>
+        <?php if($announcement){?>
             <div>
                 <span class="fw-bold">Date Announced:</span> <?php echo date("F d, Y", strtotime($announcement['date_created'])); ?>
             </div>
             <p class="ps-5 pt-3"><?=$announcement['message'];?></p>
+            <?php } else { ?>
+                <p class="container-fluid ps-5 pt-3 text-warning text-warning">----- No Annnouncement Today -----</p>
+
+            <?php } ?>
         </div>
 
         <hr>

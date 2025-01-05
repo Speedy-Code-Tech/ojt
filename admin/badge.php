@@ -3,8 +3,7 @@
         session_start();
     }
     
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/ojt/backend/db_connect.php');
-
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/backend/db_connect.php');
     $id = $_SESSION['user_id'];
 
     $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 0");

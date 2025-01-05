@@ -83,8 +83,55 @@ $result2 = $conn->query("SELECT * FROM application_table WHERE after_ojt_status 
 
             </tbody>
         </table>
-    </div>
+        <?php
+        if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
+            $emails = $_SESSION['user_email'];
+            $message = $_SESSION['msg'];
+        } else {
+            $emails = "";
+            $message = "";
+        }
 
+        ?>
+        <input name="" type="hidden" id="msg" value="<?= $message ?>">
+        <input type="hidden" value="<?= $emails ?>" id="ems">
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <?php
+    if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
+
+    ?>
+
+        <script>
+            // EmailJS initialization
+            (function() {
+                emailjs.init({
+                    publicKey: "S1FtNxV2rLYANKTgj", // Your public key
+                });
+            })();
+            window.onload = function() {
+                const email = document.getElementById("ems").value;
+                const msg = document.getElementById("msg").value;
+                // Prepare parameters for EmailJS
+                let params = {
+                    from_name: "TECHNICAL OF LA SALLE UNIVERSITY", // Your email address
+                    to_name: email, // User's email
+                    message: msg,
+                };
+
+                // Send the email
+                emailjs.send('service_e5jiq55', 'template_4nyg8cf', params).then((result) => {
+                    window.location.href = "session.php";
+
+                }).catch((err) => {
+                    console.log(err);
+                    window.location.href = "session.php";
+
+                    // Swal.fire('Error', 'Failed to send email. Please try again.', 'error');
+                });
+            }
+        </script>
+    <?php } ?>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- DataTables JS -->

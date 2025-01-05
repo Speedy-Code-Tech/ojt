@@ -25,7 +25,7 @@ if(session_status() == PHP_SESSION_NONE) session_start();
                 <form class="form-container" method="post" action="backend/login.php" onsubmit="return validateForm()">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" placeholder="juan@lsu.edu.ph"
-                        pattern="^[a-zA-Z0-9._%+-]+@lsu\.edu\.ph$" title="Must be a valid LSU email (e.g., juan@lsu.edu.ph)">
+                         title="Must be a valid LSU email (e.g., juan@lsu.edu.ph)">
                     <div class="note">Must be LSU email</div>
                     <span id="emailError" class="text-danger"></span> <!-- Error message for email -->
 
@@ -33,7 +33,7 @@ if(session_status() == PHP_SESSION_NONE) session_start();
                     <input type="password" id="password" name="password" placeholder="**********">
                     <span id="passwordError" class="text-danger"></span> <!-- Error message for password -->
 
-                    <a href="#">Forgot password?</a>
+                    <a href="forgot.php">Forgot password?</a>
                     <br>
                     <button class="btn btn-light mt-4 px-5">Login</button>
                     <div class="container-fluid text-center px-3">
@@ -75,14 +75,14 @@ if(session_status() == PHP_SESSION_NONE) session_start();
             const password = document.getElementById('password').value;
             const emailPattern = /^[a-zA-Z0-9._%+-]+@lsu\.edu\.ph$/;
 
-            // Email validation
-            if (!email) {
-                document.getElementById('emailError').textContent = 'Email is required.';
-                valid = false;
-            } else if (!emailPattern.test(email)) {
-                document.getElementById('emailError').textContent = 'Please enter a valid LSU email (e.g., juan@lsu.edu.ph).';
-                valid = false;
-            }
+            // // Email validation
+            // if (!email) {
+            //     document.getElementById('emailError').textContent = 'Email is required.';
+            //     // valid = false;
+            // } else if (!emailPattern.test(email)) {
+            //     document.getElementById('emailError').textContent = 'Please enter a valid LSU email (e.g., juan@lsu.edu.ph).';
+            //     // valid = false;
+            // }
 
             // Password validation
             if (!password) {

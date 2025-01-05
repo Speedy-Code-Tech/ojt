@@ -17,6 +17,13 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
         if ($stmt->execute()) {
             $_SESSION['status'] = 'success';
             $_SESSION['message'] = 'Application '.$s.' successfully.';
+            $email = $conn->query("SELECT * FROM application_table WHERE application_id = $application_id");
+            $em = '';
+            while ($r = $email->fetch_assoc()) {
+                $em = $r['pi_email'];
+            }
+            $_SESSION['user_email'] = $em;
+            $_SESSION['msg'] = "Congratualation! You can now start your INTERNSHIP <3!";
         } else {
             $_SESSION['status'] = 'error';
             $_SESSION['message'] = 'Failed to '.$s.' the application.';

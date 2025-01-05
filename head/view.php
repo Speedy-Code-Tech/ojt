@@ -46,12 +46,12 @@ if ($user && mysqli_num_rows($user) > 0) {
 }
 $data = mysqli_real_escape_string($conn, $data);
 
-$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 0 AND pi_course = '$data'");
-$tables1 = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 0 AND pi_course = '$data'");
+$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 1 AND pi_course = '$data'");
+$tables1 = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 1 AND pi_course = '$data'");
 $count = 0;
-while($r=$tables1->fetch_assoc() ) {
-// echo $r['user_id'];
-    $count = $count+1;
+while ($r = $tables1->fetch_assoc()) {
+    // echo $r['user_id'];
+    $count = $count + 1;
 }
 
 ?>
@@ -60,8 +60,8 @@ while($r=$tables1->fetch_assoc() ) {
     <!-- Sidebar -->
     <div class="sidebar">
         <h4 class="text-center py-3">OJT System</h4>
-        <a href="dashboard.php" ><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="#" class="active" ><i class="fa-solid fa-paperclip"></i> Before OJT Step 1 <span class="badge bg-danger">0</span></a>
+        <a href="dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="#" class="active"><i class="fa-solid fa-paperclip"></i> Before OJT Step 1 <span class="badge bg-danger">0</span></a>
         <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Intern History</a>
         <a href="history/view.php"><i class="fa-solid fa-users"></i> View History</a>
         <a href="../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
@@ -91,17 +91,31 @@ while($r=$tables1->fetch_assoc() ) {
                         <td><?= $row['pi_fname'] . ' ' . $row['pi_mname'] . ' ' . $row['pi_lname']; ?></td>
                         <td><span class="fw-bold text-success">Approved by Admin</span></td>
                         <td>
-                            <button class="btn btn-success btn-sm approve-btn" data-status = "PENDING" data-id="<?= $row['application_id']; ?>">Approve</button>
-                            <button class="btn btn-danger btn-sm decline-btn"  data-status = "DECLINED" data-id="<?= $row['application_id']; ?>">Decline</button>
+                            <button class="btn btn-success btn-sm approve-btn" data-status="PENDING" data-id="<?= $row['application_id']; ?>">Approve</button>
+                            <button class="btn btn-danger btn-sm decline-btn" data-status="DECLINED" data-id="<?= $row['application_id']; ?>">Decline</button>
                         </td>
 
                     </tr>
+          
                 <?php
                 }
                 ?>
 
             </tbody>
         </table>
+        <?php 
+                    if(isset($_SESSION['msg']) && isset($_SESSION['user_email'])){
+                    $emails=$_SESSION['user_email'];
+                    $message = $_SESSION['msg'];
+                    }else{
+                        $emails="";
+                        $message = "";
+                            
+                    }
+
+                     ?>
+                     <input name="" type="hidden" id="msg" value="<?=$message?>">
+                    <input type="hidden" value="<?=$emails?>" id="ems">
     </div>
 
     <!-- jQuery -->
@@ -181,8 +195,45 @@ while($r=$tables1->fetch_assoc() ) {
                 });
             });
         });
+        
     </script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<?php
+if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
+    
+?>
+
+    <script>
+// EmailJS initialization
+        (function() {
+            emailjs.init({
+                publicKey: "S1FtNxV2rLYANKTgj", // Your public key
+            });
+        })();
+        window.onload = function(){
+        const email = document.getElementById("ems").value;
+        const msg = document.getElementById("msg").value;
+        // Prepare parameters for EmailJS
+        let params = {
+            from_name: "TECHNICAL OF LA SALLE UNIVERSITY", // Your email address
+            to_name: email, // User's email
+            message: msg,
+        };
+
+        // Send the email
+        emailjs.send('service_e5jiq55', 'template_4nyg8cf', params).then((result) => {
+            window.location.href = "session.php";
+
+        }).catch((err) => {
+            console.log(err);
+            window.location.href = "session.php";
+
+            // Swal.fire('Error', 'Failed to send email. Please try again.', 'error');
+        });
+    }
+    </script>
+<?php } ?>
 </body>
 
 </html>

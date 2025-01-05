@@ -42,7 +42,7 @@
         unset($_SESSION['status']);
         unset($_SESSION['message']);
     }
-    $result = $conn->query("SELECT * FROM user WHERE type='admin'");
+    $result21 = $conn->query("SELECT * FROM user WHERE type='admin'");
     ?>
     <!-- Main Content -->
     <div class="dashboard">
@@ -61,7 +61,7 @@
             <tbody>
             <?php
                 $no = 1;
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $result21->fetch_assoc()) {
                     $status = $row['status'] === 'deactivated' ? 'Deactivated' : 'Active';
                     $class = $status=='Active'?'text-success':'text-danger';
                     $btnclass = $status=='Active'?'d-block':'d-none';

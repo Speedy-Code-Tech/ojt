@@ -331,6 +331,17 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <div class="form-groups">
+                            <div class="date-wrap">
+                                <label>Start Date (Optional)</label>
+                                <input class="form-input from-date" type="date" name="ptd_start_date" id="ptd_start_date">
+
+                            </div>
+                            <div class="date-wrap">
+                                <label>End Date (Optional)</label>
+                                <input class="form-input to-date" type="date" name="ptd_end_date" id="ptd_end_date">
+                            </div>
+                        </div>
 
                         <!-- Emergency Contact Details Section -->
                         <div class="form-groups">
@@ -349,7 +360,15 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                 <?php endif; ?>
                             </div>
 
-
+                            <div class="container">
+                                <div class="form-wrap">
+                                    <label for="cdi_relationship">Relationship</label>
+                                    <input value="<?= $data['cdi_relationship']; ?>" class="form-input" type="text" name="cdi_relationship" id="cdi_relationship">
+                                </div>
+                                <?php if (!empty($_SESSION['errors']['cdi_relationship'])): ?>
+                                    <p class="error-message"><?= $_SESSION['errors']['cdi_relationship'] ?></p>
+                                <?php endif; ?>
+                            </div>
                             <div class="container">
                                 <div class="form-wrap">
                                     <label for="cdi_contact">Contact Number</label>
@@ -359,26 +378,37 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                                     <p class="error-message"><?= $_SESSION['errors']['cdi_contact'] ?></p>
                                 <?php endif; ?>
                             </div>
-                            <div class="container">
-                                <div class="form-wrap">
-                                    <label for="cdi_address">Address</label>
-                                    <input value="<?= $data['cdi_address']; ?>" class="form-input" type="text" name="cdi_address" id="cdi_address">
-                                </div>
-                                <?php if (!empty($_SESSION['errors']['cdi_address'])): ?>
-                                    <p class="error-message"><?= $_SESSION['errors']['cdi_address'] ?></p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
 
-                        <!-- Submit Button -->
-                        <div class="btn-area">
-                            <button class="add-account-btn" type="submit">Submit</button>
+                        </div>
+                        <div class="container">
+                            <div class="form-wrap">
+                                <label for="cdi_com_address">Address</label>
+                                <input class="form-input" value="<?= $data['cdi_address']; ?>" type="text" name="cdi_address" id="cdi_address">
+                            </div>
+                            <?php if (!empty($_SESSION['errors']['cdi_address'])): ?>
+                                <p class="error-message"><?= $_SESSION['errors']['cdi_address'] ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="container">
+                            <div class="form-wrap">
+                                <label for="cdi_com_address">Company Address</label>
+                                <input class="form-input" value="<?= $data['cdi_com_address1']; ?>" type="text" name="cdi_com_address" id="cdi_com_address">
+                            </div>
+                            <?php if (!empty($_SESSION['errors']['cdi_com_address1'])): ?>
+                                <p class="error-message"><?= $_SESSION['errors']['cdi_com_address1'] ?></p>
+                            <?php endif; ?>
                         </div>
                     </div>
-                </form>
-            </div>
 
+                    <!-- Submit Button -->
+                    <div class="btn-area">
+                        <button class="add-account-btn" type="submit">Submit</button>
+                    </div>
+            </div>
+            </form>
         </div>
+
+    </div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

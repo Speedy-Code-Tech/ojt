@@ -48,7 +48,7 @@
     <!-- Main Content -->
     <div class="dashboard">
         <h2>PROGRAMS</h2>
-        <a href="add.php" class="btn btn-success" style="position: absolute; right: 30px; top: 20px;"><i class="fa-solid fa-plus"></i> Add Announcement</a>
+        <a href="add.php" class="btn btn-success" style="position: absolute; right: 30px; top: 20px;"><i class="fa-solid fa-plus"></i> Add Program</a>
         <hr>
         <table class="table table-hover table-striped" id="announcement">
             <thead>

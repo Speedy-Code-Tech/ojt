@@ -16,13 +16,13 @@
 <?php
 require('../../backend/db_connect.php');
 require('badge.php');
-if(session_status() == PHP_SESSION_NONE) session_start();
-    // Display success or error messages using SweetAlert
-    if (isset($_SESSION['status'])) {
-        $status = $_SESSION['status'];
-        $message = $_SESSION['message'];
+if (session_status() == PHP_SESSION_NONE) session_start();
+// Display success or error messages using SweetAlert
+if (isset($_SESSION['status'])) {
+    $status = $_SESSION['status'];
+    $message = $_SESSION['message'];
 
-        echo "
+    echo "
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -32,11 +32,12 @@ if(session_status() == PHP_SESSION_NONE) session_start();
                 });
             });
         </script>";
-        unset($_SESSION['status']);
-        unset($_SESSION['message']);
-    }  
+    unset($_SESSION['status']);
+    unset($_SESSION['message']);
+}
 $result5 = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 3");
 ?>
+
 <body>
     <!-- Sidebar -->
     <?php
@@ -65,13 +66,13 @@ $result5 = $conn->query("SELECT * FROM application_table WHERE application_statu
                 ?>
 
                     <tr>
-                        <td><?= $row['user_id'];?></td>
-                        <td><?= $row['pi_fname'].' '.$row['pi_mname'].' '.$row['pi_lname'];?></td>
-                        <td><?= $row['pi_dept'];?></td>
-                        <td><?= $row['pi_course'];?></td>
-                        <td><?= $row['application_status'];?></td>
+                        <td><?= $row['user_id']; ?></td>
+                        <td><?= $row['pi_fname'] . ' ' . $row['pi_mname'] . ' ' . $row['pi_lname']; ?></td>
+                        <td><?= $row['pi_dept']; ?></td>
+                        <td><?= $row['pi_course']; ?></td>
+                        <td><?= $row['application_status']; ?></td>
                         <td>
-                            <a href="step2.php?id=<?= $row['application_id'];?>" class="btn btn-success btn-sm">View Details</a>
+                            <a href="step2.php?id=<?= $row['application_id']; ?>" class="btn btn-success btn-sm">View Details</a>
                         </td>
                     </tr>
                 <?php
@@ -80,6 +81,20 @@ $result5 = $conn->query("SELECT * FROM application_table WHERE application_statu
 
             </tbody>
         </table>
+
+        <?php
+        if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
+            $emails = $_SESSION['user_email'];
+            $message = $_SESSION['msg'];
+        } else {
+            $emails = "";
+            $message = "";
+        }
+
+        ?>
+        <input name="" type="hidden" id="msg" value="<?= $message ?>">
+        <input type="hidden" value="<?= $emails ?>" id="ems">
+
     </div>
 
     <!-- jQuery -->
@@ -119,6 +134,42 @@ $result5 = $conn->query("SELECT * FROM application_table WHERE application_statu
             });
         });
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <?php
+    if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
+
+    ?>
+
+        <script>
+            // EmailJS initialization
+            (function() {
+                emailjs.init({
+                    publicKey: "S1FtNxV2rLYANKTgj", // Your public key
+                });
+            })();
+            window.onload = function() {
+                const email = document.getElementById("ems").value;
+                const msg = document.getElementById("msg").value;
+                // Prepare parameters for EmailJS
+                let params = {
+                    from_name: "TECHNICAL OF LA SALLE UNIVERSITY", // Your email address
+                    to_name: email, // User's email
+                    message: msg,
+                };
+
+                // Send the email
+                emailjs.send('service_e5jiq55', 'template_4nyg8cf', params).then((result) => {
+                    window.location.href = "session.php";
+
+                }).catch((err) => {
+                    console.log(err);
+                    window.location.href = "session.php";
+
+                    // Swal.fire('Error', 'Failed to send email. Please try again.', 'error');
+                });
+            }
+        </script>
+    <?php } ?>
 
 </body>
 

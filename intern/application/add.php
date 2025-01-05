@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once("../../backend/db_connect.php");
 
 // Initialize an array to store errors
@@ -30,15 +33,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ptd_address = htmlspecialchars($_POST['ptd_address'] ?? '');
     $ptd_contact_number = htmlspecialchars($_POST['ptd_contact_number'] ?? '');
     $ptd_training_hrs = (int) ($_POST['ptd_training_hrs'] ?? 0);
-    $ptd_start_date = $_POST['ptd_start_date'] ?? null;
-    $ptd_end_date = $_POST['ptd_end_date'] ?? null;
+    // Assign NULL if date fields are empty
+$ptd_start_date = !empty($_POST['ptd_start_date']) ? $_POST['ptd_start_date'] : NULL;
+$ptd_end_date = !empty($_POST['ptd_end_date']) ? $_POST['ptd_end_date'] : NULL;
+
     $cdi_name = htmlspecialchars($_POST['cdi_name'] ?? '');
     $cdi_relationship = htmlspecialchars($_POST['cdi_relationship'] ?? '');
     $cdi_contact = htmlspecialchars($_POST['cdi_contact'] ?? '');
     $cdi_address = htmlspecialchars($_POST['cdi_address'] ?? '');
-    $cdi_com_address = htmlspecialchars($_POST['cdi_com_address'] ?? null);
-
+    $cdi_com_address = htmlspecialchars($_POST['cdi_com_address'] ?? '');
+    
     // Validation: Check for required fields
+    if (empty($cdi_com_address)) {
+        $errors['cdi_com_address1'] = "Contact Address is required.";
+    }
+    if (empty($cdi_address)) {
+        $errors['cdi_address'] = "Emergency Contact Address is required.";
+    }
     if (empty($start_year)) {
         $errors['start_year'] = "Start Year is required.";
     }
@@ -93,10 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($cdi_contact)) {
         $errors['cdi_contact'] = "Emergency Contact Number is required.";
     }
-    if (empty($cdi_address)) {
-        $errors['cdi_address'] = "Emergency Contact Address is required.";
-    }
-
     // If there are errors, store them in session and redirect back
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
@@ -105,11 +112,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // If no errors, proceed with inserting data into the database
-    $query = "INSERT INTO application_table (user_id, pi_fname, pi_mname, pi_lname, pi_dept, pi_course, pi_year_lv, pi_gender, pi_age, 
+    $query = "INSERT INTO application_table (
+    user_id, pi_fname, pi_mname, pi_lname, pi_dept, pi_course, pi_year_lv, pi_gender, pi_age, 
     pi_civil_status, pi_bdate, pi_contact, pi_email, pi_address, ptd_establishment, ptd_address, ptd_contact_number, 
     ptd_training_hrs, ptd_start_date, ptd_end_date, cdi_name, cdi_relationship, cdi_contact, cdi_address, cdi_com_address,
     application_status, is_new, applicant_notified, application_step, start_date, end_date) 
-    VALUES ('$user_id', '$pi_fname', '$pi_mname', '$pi_lname', '$pi_dept', '$pi_course', '$pi_year_lv', '$pi_gender', 
+    VALUES (
+    '$user_id', '$pi_fname', '$pi_mname', '$pi_lname', '$pi_dept', '$pi_course', '$pi_year_lv', '$pi_gender', 
     '$pi_age', '$pi_civil_status', '$pi_bdate', '$pi_contact', '$pi_email', '$pi_address', '$ptd_establishment', 
     '$ptd_address', '$ptd_contact_number', '$ptd_training_hrs', '$ptd_start_date', '$ptd_end_date', '$cdi_name', 
     '$cdi_relationship', '$cdi_contact', '$cdi_address', '$cdi_com_address', 'PENDING', 'true', 'true', 0, '$start_year', '$end_year')";
