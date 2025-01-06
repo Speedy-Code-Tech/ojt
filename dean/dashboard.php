@@ -64,8 +64,8 @@ while ($row = mysqli_fetch_assoc($intern)) {
         <h4 class="text-center py-3">OJT System</h4>
         <a href="#" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="students.php"><i class="fa-solid fa-paperclip"></i> Students Approval <span class="badge bg-danger"><?= $count ?></span></a>
-        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Intern History</a>
-        <a href="history/view.php"><i class="fa-solid fa-users"></i> View History</a>
+        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Managed Intern</a>
+        <a href="history/view.php"><i class="fa-solid fa-users"></i> Awaiting Review</a>
         <a href="../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
 
     </div>

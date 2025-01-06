@@ -15,6 +15,9 @@
 <?php
 require_once('step1.php');
 require_once('after.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Query to get the latest announcement from the database
 $query = "SELECT * FROM announcement ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($conn, $query);
@@ -37,18 +40,12 @@ if ($user && mysqli_num_rows($user) > 0) {
 } else {
     $data = null;
 }
-$data = mysqli_real_escape_string($conn, $data);
 $admin = $conn->query("SELECT * FROM user WHERE type='admin'");
 $adviser = $conn->query("SELECT * FROM user WHERE type='adviser'");
 $intern = $conn->query("SELECT * FROM user WHERE type='intern'");
 $dean = $conn->query("SELECT * FROM user WHERE type='dean'");
 
-$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 4 AND pi_dept = '$data'");
 
-$count = 0;
-while ($row = mysqli_fetch_assoc($tables)) {
-    $count = $count + 1;
-}
 $adviser_count = 0;
 while ($row = mysqli_fetch_assoc($adviser)) {
     $adviser_count = $adviser_count + 1;

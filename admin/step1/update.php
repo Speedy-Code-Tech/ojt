@@ -8,7 +8,7 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
     $status = $_GET['status']; // Sanitize the input
 
     // Update query to change the status to "APPROVED"
-    $query = "UPDATE application_table SET application_status = '$status', application_step = 2 WHERE application_id = ?";
+    $query = "UPDATE application_table SET application_status = '$status', application_step = 3 WHERE application_id = ?";
     $stmt = $conn->prepare($query);
 
     if ($stmt) {

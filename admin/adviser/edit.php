@@ -1,7 +1,9 @@
 <?php
- if(session_status()===PHP_SESSION_NONE) session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 require('../../backend/db_connect.php');
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $query = "SELECT * FROM user WHERE user_id = $id";
@@ -12,6 +14,9 @@ if (isset($_GET['id'])) {
         $email = $row['email'];
         $department = $row['department'];
         $program = $row['program'];
+        $fname = $row['fname'];
+        $mname = $row['mname'];
+        $lname = $row['lname'];
     } else {
         echo "User not found.";
         exit;
@@ -24,14 +29,17 @@ if (isset($_GET['id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
+    $mname = mysqli_real_escape_string($conn, $_POST['mname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
     $department = mysqli_real_escape_string($conn, $_POST['department']);
     $programs = mysqli_real_escape_string($conn, $_POST['programs']);
 
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE user SET email = '$email', password = '$hashed_password', department = '$department', program = '$programs' WHERE user_id = $id";
+        $sql = "UPDATE user SET email = '$email', password = '$hashed_password', department = '$department', program = '$programs',fname = '$fname',mname = '$mname',lname = '$lname' WHERE user_id = $id";
     } else {
-        $sql = "UPDATE user SET email = '$email', department = '$department', program = '$programs' WHERE user_id = $id";
+        $sql = "UPDATE user SET email = '$email', department = '$department', program = '$programs',fname = '$fname',mname = '$mname',lname = '$lname' WHERE user_id = $id";
     }
 
     if (mysqli_query($conn, $sql)) {
@@ -67,8 +75,8 @@ $programList = $conn->query("SELECT * FROM programs");
 <body>
     <!-- Sidebar -->
     <?php
-    if(session_status()===PHP_SESSION_NONE) session_start();
-   $_SESSION["page"] = "heads_accounts";
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $_SESSION["page"] = "heads_accounts";
     include("../sidebar.php");
     ?>
     <div class="dashboard">
@@ -76,6 +84,37 @@ $programList = $conn->query("SELECT * FROM programs");
         <hr>
         <div class="container-fluid">
             <form action="" method="post">
+                <div class="mb-3">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" placeholder="Maria" name="fname" class="form-control" value="<?= htmlspecialchars($fname); ?>" id="fname" required>
+                    <?php
+                    if (isset($_SESSION['fname'])) {
+                        echo '<span class="text-danger">' . $_SESSION['fname'] . '</span>';
+                        unset($_SESSION['fname']);
+                    }
+                    ?>
+                </div>
+                <div class="mb-3">
+                    <label for="mname" class="form-label">Middle Name</label>
+                    <input type="text" placeholder="Optional" name="mname" class="form-control" id="mname" value="<?= htmlspecialchars($mname); ?>" required>
+                    <?php
+                    if (isset($_SESSION['mname'])) {
+                        echo '<span class="text-danger">' . $_SESSION['mname'] . '</span>';
+                        unset($_SESSION['mname']);
+                    }
+                    ?>
+                </div>
+                <div class="mb-3">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input type="text" placeholder="Dela Cruz" value="<?= htmlspecialchars($lname); ?>" name="lname" class="form-control" id="lname" required>
+                    <?php
+                    if (isset($_SESSION['lname'])) {
+                        echo '<span class="text-danger">' . $_SESSION['lname'] . '</span>';
+                        unset($_SESSION['lname']);
+                    }
+                    ?>
+                </div>
+
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" value="<?= htmlspecialchars($email); ?>" required>

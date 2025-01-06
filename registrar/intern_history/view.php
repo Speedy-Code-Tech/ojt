@@ -99,10 +99,6 @@
                     <th>FullName</th>
                     <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Program</th>
-                    <th>Training Hours</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
                     <th>Academic Year</th>
                 </tr>
             </thead>
@@ -114,10 +110,6 @@
                     <td><?= $r['pi_fname'].' '.$r['pi_mname'].' '.$r['pi_lname'] ?></td>
                     <td><?= $r['pi_email'] ?></td>
                     <td><?= $r['pi_contact'] ?></td>
-                    <td><?= $r['pi_course'] ?></td>
-                    <td><?= $r['ptd_training_hrs'] ?></td>
-                    <td><?= $r['ptd_start_date'] ?></td>
-                    <td><?= $r['ptd_end_date'] ?></td>
                     <td><?= $r['start_date'].' - '.$r['end_date'] ?></td>
                    </tr>
                 <?php }

@@ -37,7 +37,7 @@ while ($row = mysqli_fetch_assoc($tables)) {
         <h4 class="text-center py-3">OJT System</h4>
         <a href="../dashboard.php" ><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="../view.php"><i class="fa-solid fa-paperclip"></i> Before OJT Step 1 <span class="badge bg-danger"><?= $count ?></span></a>
-        <a href="#" class="active"><i class="fa-solid fa-users"></i> Intern History</a>
+        <a href="#" class="active"><i class="fa-solid fa-users"></i> Managed Intern</a>
         <a href="../history/view.php"><i class="fa-solid fa-users"></i> View History</a>
         <a href="../../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
 
@@ -84,7 +84,7 @@ while ($row = mysqli_fetch_assoc($tables)) {
     ?>
     <!-- Main Content -->
     <div class="dashboard">
-        <h2>VIEW INTERN HISTORY</h2>
+        <h2>VIEW Managed Intern</h2>
         <hr>
         <div class="container-fluid">
             <h5>Filter By Academic Year</h5>
@@ -127,11 +127,6 @@ while ($row = mysqli_fetch_assoc($tables)) {
                     <th>FullName</th>
                     <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Program</th>
-                    <th>Training Hours</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Academic Year</th>
                 </tr>
             </thead>
             <tbody>
@@ -142,11 +137,6 @@ while ($row = mysqli_fetch_assoc($tables)) {
                     <td><?= $r['pi_fname'].' '.$r['pi_mname'].' '.$r['pi_lname'] ?></td>
                     <td><?= $r['pi_email'] ?></td>
                     <td><?= $r['pi_contact'] ?></td>
-                    <td><?= $r['pi_course'] ?></td>
-                    <td><?= $r['ptd_training_hrs'] ?></td>
-                    <td><?= $r['ptd_start_date'] ?></td>
-                    <td><?= $r['ptd_end_date'] ?></td>
-                    <td><?= $r['start_date'].' - '.$r['end_date'] ?></td>
                    </tr>
                 <?php }
             ?>

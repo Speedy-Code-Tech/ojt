@@ -123,8 +123,8 @@ if (isset($_GET['id'])) {
         <a href="../dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="../view.php"><i class="fa-solid fa-paperclip"></i> Before OJT Step 5 <span class="badge bg-danger"><?=$count?></span></a>
         <a href="../after.php"><i class="fa-solid fa-paperclip"></i> After OJT Step 2 <span class="badge bg-danger"><?$count1?></span></a>
-        <a href="../intern_history/view.php"><i class="fa-solid fa-users"></i> Intern History</a>
-        <a href="#" class="active"><i class="fa-solid fa-users"></i> View History</a>
+        <a href="../intern_history/view.php"><i class="fa-solid fa-users"></i> Managed Interns</a>
+        <a href="#" class="active"><i class="fa-solid fa-users"></i> Awaiting Review</a>
         <a href="../../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
 
     </div>

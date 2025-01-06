@@ -24,10 +24,6 @@
         <i class="fa-solid fa-hand"></i> Before OJT
     </a>
     <div id="beforeOJTMenu" class="collapse ">
-        <a href="<?= ($page == 'step1') ? '#' : '/admin/step1/view.php' ?>" class="ms-3 <?= ($page == 'step1') ? 'active' : '' ?>"> 
-            <i class="fa-solid fa-paperclip"></i> Step 1 
-            <span style="color: red; cursor: pointer;">(<?= isset($step1) ? $step1 : 0 ?>)</span>
-        </a>
         <a href="<?= ($page == 'step2') ? '#' : '/admin/before/view.php' ?>" class="ms-3 <?= ($page == 'step2') ? 'active' : '' ?>"> 
             <i class="fa-solid fa-paperclip"></i> Step 2 
             <span style="color: red; cursor: pointer;">(<?= isset($step2) ? $step2 : 0 ?>)</span>
@@ -86,7 +82,7 @@
     <a href="<?= ($page == 'view_intern') ? '#' : '/admin/intern_history/view.php' ?>" class=" <?= ($page == 'view_intern') ? 'active' : '' ?>">
     <i class="fa-solid fa-users"></i> View Intern History</a>
     <a href="<?= ($page == 'history') ? '#' : '/admin/history/view.php' ?>" class=" <?= ($page == 'history') ? 'active' : '' ?>">
-    <i class="fa-solid fa-paper-plane"></i> View History</a>
+    <i class="fa-solid fa-paper-plane"></i> Awaiting Review</a>
 
     <!-- Requirements -->
     <a href="<?= ($page == 'requirements') ? '#' : '/admin/requirements/view.php' ?>" class="<?= ($page == 'requirements') ? 'active' : '' ?>">

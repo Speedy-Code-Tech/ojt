@@ -97,7 +97,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
         <div class="container-fluid">
             <div class="main-content container-fluid d-flex justify-content-center align-items-center">
 
-                <?php if ($step == 0 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php if ($step == 0 && $application['application_status'] == 'PENDING') { ?>
                     <div class="pending-message-step-intern-info card">
                         <div class="progress-area">
                             <div class="progress-wrapper">
@@ -145,7 +145,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
                     </div>
 
-                <?php } else if ($step == 0 && $application['application_status'] == 'DECLINED' && $application) { ?>
+                <?php } else if ($step == 0 && $application['application_status'] == 'DECLINED') { ?>
 
                     <div class="declined-message-step-intern-info card">
 
@@ -198,7 +198,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'PENDING') { ?>
 
                     <div class="pending-message-step-1 card">
                         <div class="progress-area">
@@ -269,7 +269,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                         </div>
 
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'ACCEPTED') { ?>
 
                     <div class="accepted-message-step-1 card">
                         <div class="progress-area">
@@ -315,7 +315,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <h6>Your submitted form for step 1 has been verified; to proceed to step 2, please click <span style="color: rgb(99, 226, 99)"><a href="submit-application-step-2.html">here</a></span>.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 1 && $application['application_status'] == 'DECLINED' && $application) { ?>
+                <?php } else if ($step == 1 && $application['application_status'] == 'DECLINED') { ?>
 
                     <div class="declined-message-step-1 card">
                         <div class="progress-area">
@@ -391,7 +391,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'PENDING') { ?>
                     <div class="pending-message-step-2 card">
 
                         <div class="progress-area">
@@ -483,7 +483,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                         </div>
 
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'ACCEPTED') { ?>
 
                     <div class="accepted-message-step-2 card">
                         <div class="progress-area">
@@ -529,7 +529,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <h6>Your submitted form for step 2 has been verified; to proceed to step 3, please click <span style="color: rgb(99, 226, 99)"><a href="submit-application-step-3.html">here</a></span>.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 2 && $application['application_status'] == 'DECLINED' && $application) { ?>
+                <?php } else if ($step == 2 && $application['application_status'] == 'DECLINED') { ?>
 
                     <div class="declined-message-step-2 card">
                         <div class="progress-area">
@@ -635,7 +635,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'PENDING') { ?>
 
 
                     <div class="pending-message-step-3 card">
@@ -722,7 +722,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'DECLINED' && $application) { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'DECLINED') { ?>
 
 
 
@@ -812,7 +812,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 3 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+                <?php } else if ($step == 3 && $application['application_status'] == 'ACCEPTED') { ?>
 
 
                     <div class="accepted-message-step-3 card">
@@ -860,7 +860,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                         </div>
 
                     </div>
-                <?php } else if ($step == 4 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php } else if ($step == 4 && $application['application_status'] == 'PENDING') { ?>
 
 
                     <div class="pending-message-step-3 card">
@@ -912,7 +912,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 4 && $application['application_status'] == 'DECLINED' && $application) { ?>
+                <?php } else if ($step == 4 && $application['application_status'] == 'DECLINED') { ?>
 
 
 
@@ -964,7 +964,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
 
                     </div>
-                <?php } else if ($step == 4 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+                <?php } else if ($step == 4 && $application['application_status'] == 'ACCEPTED') { ?>
 
 
                     <div class="accepted-message-step-3 card">
@@ -1014,7 +1014,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
 
                     </div>
 
-                <?php } else if ($step == 5 && $application['application_status'] == 'PENDING' && $application) { ?>
+                <?php } else if ($step == 5 && $application['application_status'] == 'PENDING') { ?>
 
                     <div class="accepted-message-step-4 card">
                         <div class="progress-area">
@@ -1060,7 +1060,7 @@ if ($result12 && mysqli_num_rows($result12) > 0) {
                             <h6>You are now approved by the college dean. Please wait for the approval of the adviser.</h6>
                         </div>
                     </div>
-                <?php } else if ($step == 5 && $application['application_status'] == 'ACCEPTED' && $application) { ?>
+                <?php } else if ($step == 5 && $application['application_status'] == 'ACCEPTED') { ?>
 
                     <div class="accepted-message-step-5 card">
                         <div class="progress-area">

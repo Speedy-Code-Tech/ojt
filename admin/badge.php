@@ -6,7 +6,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/backend/db_connect.php');
     $id = $_SESSION['user_id'];
 
-    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 0");
+    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 1");
     $student = 0;
     
     if($result->num_rows > 0) {
@@ -15,19 +15,19 @@
     }
 }
 
-    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 1 ");
+    $result12 = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 2 ");
     $step1 = 0;
-    while($row = $result->fetch_assoc() ) {
+    while($row = $result12->fetch_assoc() ) {
         $step1 = $step1+1;
     }
 
-    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 2");
+    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 3");
     $step2 = 0;
     while($row = $result->fetch_assoc() ) {
         $step2 = $step2+1;
     }
 
-    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 3");
+    $result = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 4");
     $step3 = 0;
     while($row = $result->fetch_assoc() ) {
         $step3 = $step3+1;

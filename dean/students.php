@@ -37,17 +37,23 @@ if (isset($_SESSION['status'])) {
 $id = $_SESSION['user_id'];
 $query = "SELECT * FROM user WHERE user_id = $id";
 $user = mysqli_query($conn, $query);
-
+$dept='';
 // Check if there is a result
 if ($user && mysqli_num_rows($user) > 0) {
-    $data = mysqli_fetch_assoc($user)['department'];
+    $data = mysqli_fetch_assoc($user);
 } else {
     $data = null;
 }
-$data = strtoupper(mysqli_real_escape_string($conn, $data));
+$dept = $data['department'];
+
+$data = strtoupper(mysqli_real_escape_string($conn, $data['department']));
 
 $tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 4 AND pi_dept = '$data'");
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$advisers = $conn->query("SELECT * FROM user WHERE type = 'adviser' AND department = '$dept'");
 
 ?>
 
@@ -57,14 +63,14 @@ $tables = $conn->query("SELECT * FROM application_table WHERE application_status
         <h4 class="text-center py-3">OJT System</h4>
         <a href="dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="#" class="active"><i class="fa-solid fa-paperclip"></i> Students Approval <span class="badge bg-danger">0</span></a>
-        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Intern History</a>
-        <a href="history/view.php"><i class="fa-solid fa-users"></i> View History</a>
+        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Managed Intern</a>
+        <a href="history/view.php"><i class="fa-solid fa-users"></i> Awaiting Review</a>
         <a href="../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
     </div>
 
     <!-- Main Content -->
     <div class="dashboard">
-        <h2>4TH STEP PENDING APPLICATIONS OF <?=$data?></h2>
+        <h3>4TH STEP ASSIGN INTERNS TO ADVISER OF <?= $data ?></h3>
         <hr>
         <table class="table table-hover table-striped" id="announcement">
             <thead>
@@ -77,157 +83,78 @@ $tables = $conn->query("SELECT * FROM application_table WHERE application_status
             </thead>
             <tbody>
                 <?php
-                $no = 1;
                 while ($row = $tables->fetch_assoc()) {
                 ?>
-
                     <tr>
                         <td><?= $row['user_id']; ?></td>
                         <td><?= $row['pi_fname'] . ' ' . $row['pi_mname'] . ' ' . $row['pi_lname']; ?></td>
                         <td><span class="fw-bold text-success">Approved by Admin</span></td>
                         <td>
-                            <button class="btn btn-success btn-sm approve-btn" data-status = "PENDING" data-id="<?= $row['application_id']; ?>">Approve</button>
-                            <button class="btn btn-danger btn-sm decline-btn"  data-status = "DECLINED" data-id="<?= $row['application_id']; ?>">Decline</button>
+                            <button class="btn btn-primary btn-sm assign-btn" data-id="<?= $row['application_id']; ?>" data-name="<?= $row['pi_fname'] . ' ' . $row['pi_mname'] . ' ' . $row['pi_lname']; ?>">Assign</button>
                         </td>
-
                     </tr>
                 <?php
                 }
                 ?>
-
             </tbody>
         </table>
-        
-        <?php
-        if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
-            $emails = $_SESSION['user_email'];
-            $message = $_SESSION['msg'];
-        } else {
-            $emails = "";
-            $message = "";
-        }
-
-        ?>
-        <input name="" type="hidden" id="msg" value="<?= $message ?>">
-        <input type="hidden" value="<?= $emails ?>" id="ems">
-
     </div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap JS (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignModalLabel">Assign Adviser</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="assignForm" action="assign_adviser.php" method="POST">
+                        <input type="hidden" name="application_id" id="applicationId">
+                        <div class="mb-3">
+                            <label for="studentName" class="form-label">Student Name</label>
+                            <input type="text" class="form-control" id="studentName" name="student_name" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adviser" class="form-label">Adviser</label>
+                            <select class="form-select" id="adviser" name="adviser" required>
+                                <option value="" selected disabled>Select an adviser</option>
+                                <?php while($r = $advisers->fetch_assoc()){?>
+                                    <option value="<?= $r['user_id']?>"><?= $r['fname']. ' '.$r['mname'][0].'. '.$r['lname']?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="assignForm" class="btn btn-primary">Assign</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Initialize DataTable
         $(document).ready(function() {
             $('#announcement').DataTable();
-        });
-    </script>
 
-    <script>
-        $(document).ready(function() {
-            // Attach click event to all delete buttons
-            $('.delete-btn').on('click', function() {
-                const announcementId = $(this).data('id'); // Get the announcement ID from the button's data-id attribute
+            // Show modal on Assign button click
+            $('.assign-btn').on('click', function() {
+                const applicationId = $(this).data('id');
+                const studentName = $(this).data('name');
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to delete.php with the announcement ID
-                        window.location.href = `delete.php?id=${announcementId}`;
-                    }
-                });
-            });
-            // Approve button click handler
-            $('.approve-btn').on('click', function() {
-                const applicationId = $(this).data('id'); // Get the application ID
-                const status = $(this).data('status'); // Get the application ID
+                // Set modal input values
+                $('#applicationId').val(applicationId);
+                $('#studentName').val(studentName);
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You are about to approve this application.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, Approve',
-                    cancelButtonText: 'Cancel',
-                    confirmButtonColor: '#28a745',
-                    cancelButtonColor: '#d33',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to update.php with the application ID
-                        window.location.href = `update.php?id=${applicationId}&status=${status}`;
-                    }
-                });
-            });
-
-            $('.decline-btn').on('click', function() {
-                const applicationId = $(this).data('id'); // Get the application ID
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You are about to approve this application.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, Approve',
-                    cancelButtonText: 'Cancel',
-                    confirmButtonColor: '#28a745',
-                    cancelButtonColor: '#d33',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to update.php with the application ID
-                        window.location.href = `update.php?id=${applicationId}`;
-                    }
-                });
+                // Show the modal
+                $('#assignModal').modal('show');
             });
         });
     </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <?php
-    if (isset($_SESSION['msg']) && isset($_SESSION['user_email'])) {
-
-    ?>
-
-        <script>
-            // EmailJS initialization
-            (function() {
-                emailjs.init({
-                    publicKey: "S1FtNxV2rLYANKTgj", // Your public key
-                });
-            })();
-            window.onload = function() {
-                const email = document.getElementById("ems").value;
-                const msg = document.getElementById("msg").value;
-                // Prepare parameters for EmailJS
-                let params = {
-                    from_name: "TECHNICAL OF LA SALLE UNIVERSITY", // Your email address
-                    to_name: email, // User's email
-                    message: msg,
-                };
-
-                // Send the email
-                emailjs.send('service_e5jiq55', 'template_4nyg8cf', params).then((result) => {
-                    window.location.href = "session.php";
-
-                }).catch((err) => {
-                    console.log(err);
-                    window.location.href = "session.php";
-
-                    // Swal.fire('Error', 'Failed to send email. Please try again.', 'error');
-                });
-            }
-        </script>
-    <?php } ?>
-
 </body>
 
 </html>

@@ -6,7 +6,7 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
     $status = $_GET['status'];
 
     // Update the application status
-    $query = "UPDATE application_table SET application_status = '$status',application_step=2 WHERE application_id = $id";
+    $query = "UPDATE application_table SET application_status = '$status',application_step=1 WHERE application_id = $id";
     if (mysqli_query($conn, $query)) {
         $_SESSION['status'] = 'success';
         $_SESSION['message'] = 'Intern '.$status .' successfully!';

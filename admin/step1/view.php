@@ -35,7 +35,7 @@ if (isset($_SESSION['status'])) {
     unset($_SESSION['message']);
 }
 
-$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 1 ");
+$tables = $conn->query("SELECT * FROM application_table WHERE application_status = 'PENDING' AND application_step = 2 ");
 
 
 ?>

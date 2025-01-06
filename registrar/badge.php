@@ -3,7 +3,7 @@
         session_start();
     }
     
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/ojt/backend/db_connect.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/backend/db_connect.php');
 
     $id = $_SESSION['user_id'];
 

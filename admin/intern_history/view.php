@@ -114,32 +114,21 @@ if ($fromYear && $toYear) {
         <table class="table table-hover table-striped" id="announcement">
             <thead>
                 <tr>
-                    <th>FullName</th>
+                    <th>Full Name</th>
                     <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Program</th>
-                    <th>Training Hours</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
                     <th>Academic Year</th>
                 </tr>
             </thead>
             <tbody>
-            <?php
-                $no = 1;
-                while ($r = $result->fetch_assoc()) { ?>
-                   <tr>
-                    <td><?= $r['pi_fname'].' '.$r['pi_mname'].' '.$r['pi_lname'] ?></td>
-                    <td><?= $r['pi_email'] ?></td>
-                    <td><?= $r['pi_contact'] ?></td>
-                    <td><?= $r['pi_course'] ?></td>
-                    <td><?= $r['ptd_training_hrs'] ?></td>
-                    <td><?= $r['ptd_start_date'] ?></td>
-                    <td><?= $r['ptd_end_date'] ?></td>
-                    <td><?= $r['start_date'].' - '.$r['end_date'] ?></td>
-                   </tr>
-                <?php }
-            ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= "{$row['pi_fname']} {$row['pi_mname']} {$row['pi_lname']}" ?></td>
+                        <td><?= $row['pi_email'] ?></td>
+                        <td><?= $row['pi_contact'] ?></td>
+                        <td><?= "{$row['start_date']} - {$row['end_date']}" ?></td>
+                    </tr>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>

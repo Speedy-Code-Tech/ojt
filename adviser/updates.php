@@ -1,6 +1,8 @@
 <?php
 require('../backend/db_connect.php');
 session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 // Check if the application ID is provided
 if (isset($_GET['id']) && isset($_GET['status'])) {
@@ -17,7 +19,7 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
         if ($stmt->execute()) {
             $_SESSION['status'] = 'success';
             $_SESSION['message'] = 'Application '.$s.' successfully.';
-            $email = $conn->query("SELECT * FROM application_table WHERE application_id = $id");
+            $email = $conn->query("SELECT * FROM application_table WHERE application_id = $application_id");
         $em = '';
         while ($r = $email->fetch_assoc()) {
             $em = $r['pi_email'];

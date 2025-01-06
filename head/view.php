@@ -62,7 +62,7 @@ while ($r = $tables1->fetch_assoc()) {
         <h4 class="text-center py-3">OJT System</h4>
         <a href="dashboard.php"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="#" class="active"><i class="fa-solid fa-paperclip"></i> Before OJT Step 1 <span class="badge bg-danger">0</span></a>
-        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Intern History</a>
+        <a href="intern_history/view.php"><i class="fa-solid fa-users"></i> Managed Intern</a>
         <a href="history/view.php"><i class="fa-solid fa-users"></i> View History</a>
         <a href="../backend/logout.php" class="logout"><i class="fa-solid fa-right-to-bracket"></i> Log Out</a>
     </div>

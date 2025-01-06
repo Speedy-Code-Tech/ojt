@@ -53,7 +53,7 @@ $result12 = $conn->query("SELECT * FROM department");
                 <div class="mb-3">
                     <label for="department" class="form-label">Department</label>
                     <select name="department" class="form-select" id="department" required>
-                        <option value="" disabled selected><?php if($result12->num_rows>0){?>Select Department<?php}else{?>Please Add A Department First    <?php}?></option>
+                        <option value="" disabled selected><?php if($result12->num_rows>0){?>Select Department<?php } else { ?>Please Add A Department First    <?php } ?></option>
                         <?php
                         
                         while ($row = $result12->fetch_assoc()) {

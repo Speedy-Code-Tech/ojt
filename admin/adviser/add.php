@@ -1,6 +1,5 @@
 <?php
- if(session_status()===PHP_SESSION_NONE) session_start();
-
+if (session_status() === PHP_SESSION_NONE) session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,73 +18,92 @@
 <?php
 require('../../backend/db_connect.php');
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $department = mysqli_real_escape_string($conn, $_POST['department']);
-    $program = mysqli_real_escape_string($conn, $_POST['programs']);
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
-    $type = 'adviser'; // Default user type for admin
+    $errors = [];
 
-    if (!preg_match('/@lsu\.edu\.ph$/', $email)) {
-        $_SESSION['email_error'] = 'Email must end with @lsu.edu.ph!';
-        header('Location: add.php'); // Redirect back to the add admin page
+    // Input validation
+    $fname = trim($_POST['fname']);
+    $mname = trim($_POST['mname']);
+    $lname = trim($_POST['lname']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $department = trim($_POST['department']);
+    $program = trim($_POST['programs']);
+
+    if (empty($fname)) $errors['fname'] = "First Name is required.";
+    if (empty($lname)) $errors['lname'] = "Last Name is required.";
+    if (empty($email)) $errors['email'] = "Email is required.";
+    elseif (!preg_match('/@lsu\.edu\.ph$/', $email)) $errors['email'] = "Email must end with @lsu.edu.ph.";
+    if (empty($password)) $errors['password'] = "Password is required.";
+    if (empty($department)) $errors['department'] = "Department is required.";
+    if (empty($program)) $errors['program'] = "Program is required.";
+
+    if (empty($errors)) {
+        $email = mysqli_real_escape_string($conn, $email);
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $type = 'adviser';
+
+        // Check if the email already exists
+        $email_check_query = "SELECT * FROM user WHERE email = '$email'";
+        $result = mysqli_query($conn, $email_check_query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $_SESSION['email_error'] = 'Email is already taken!';
+            header('Location: add.php');
+            exit;
+        }
+
+        // Insert into the database
+        $sql = "INSERT INTO user  email, password, type, department, program,fname, mname, lname) 
+                VALUES ( '$email', '$hashed_password', '$type', '$department', '$program''$fname', '$mname', '$lname')";
+
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = 'success';
+            $_SESSION['message'] = 'Adviser added successfully!';
+        } else {
+            $_SESSION['status'] = 'error';
+            $_SESSION['message'] = 'Error: ' . mysqli_error($conn);
+        }
+
+        header('Location: view.php');
         exit;
-    }
-
-    // Check if the email already exists
-    $email_check_query = "SELECT * FROM user WHERE email = '$email'";
-    $result = mysqli_query($conn, $email_check_query);
-    
-    if (mysqli_num_rows($result) > 0) {
-        // Email already exists
-        $_SESSION['email_error'] = 'Email is already taken!';
-        header('Location: add.php'); // Redirect back to the add admin page
-        exit;
-    }
-
-    // Insert query
-    $sql = "INSERT INTO user (email, password, type,department,program) VALUES ('$email', '$hashed_password', '$type','$department','$program')";
-
-    if (mysqli_query($conn, $sql)) {
-        $_SESSION['status'] = 'success';
-        $_SESSION['message'] = 'Adviser added successfully!';
     } else {
-        $_SESSION['status'] = 'error';
-        $_SESSION['message'] = 'Error: ' . mysqli_error($conn);
+        $_SESSION['errors'] = $errors;
     }
-
-    header('Location: view.php'); // Redirect to the admin accounts view page
-    exit;
 }
+
 $result1 = $conn->query("SELECT * FROM department");
 $results2 = $conn->query("SELECT * FROM programs");
-
 ?>
 
 <body>
-    <!-- Sidebar -->
     <?php
-     if(session_status()===PHP_SESSION_NONE) session_start();
     $_SESSION["page"] = "heads_accounts";
     include("../sidebar.php");
     ?>
-    <!-- Main Content -->
     <div class="dashboard">
         <h2>ADD NEW ADVISER</h2>
         <hr>
         <div class="container-fluid">
-            <form action="#" method="post">
+            <form action="#" method="post" id="add-adviser-form">
+                <div class="mb-3">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" name="fname" class="form-control" id="fname" value="<?= htmlspecialchars($_POST['fname'] ?? '') ?>" required>
+                    <?php if (isset($_SESSION['errors']['fname'])) echo '<span class="text-danger">' . $_SESSION['errors']['fname'] . '</span>'; ?>
+                </div>
+                <div class="mb-3">
+                    <label for="mname" class="form-label">Middle Name</label>
+                    <input type="text" name="mname" class="form-control" id="mname" value="<?= htmlspecialchars($_POST['mname'] ?? '') ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input type="text" name="lname" class="form-control" id="lname" value="<?= htmlspecialchars($_POST['lname'] ?? '') ?>" required>
+                    <?php if (isset($_SESSION['errors']['lname'])) echo '<span class="text-danger">' . $_SESSION['errors']['lname'] . '</span>'; ?>
+                </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" placeholder="firstname.lastname@lsu.edu.ph" name="email" class="form-control" id="email" required>
-                    <?php
-                    if (isset($_SESSION['email_error'])) {
-                        echo '<span class="text-danger">' . $_SESSION['email_error'] . '</span>';
-                        unset($_SESSION['email_error']);
-                    }
-                    ?>
+                    <input type="email" name="email" class="form-control" id="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                    <?php if (isset($_SESSION['errors']['email'])) echo '<span class="text-danger">' . $_SESSION['errors']['email'] . '</span>'; ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -95,32 +113,30 @@ $results2 = $conn->query("SELECT * FROM programs");
                     <label for="department" class="form-label">Department</label>
                     <select name="department" class="form-select" id="department" required>
                         <option value="" disabled selected>Select Department</option>
-                        <?php
-                        while ($row = $result1->fetch_assoc()) {
-                            echo '<option value="' . htmlspecialchars($row['dept']) . '">' . htmlspecialchars($row['dept']) . '</option>';
-                        }
-                        ?>
+                        <?php while ($row = $result1->fetch_assoc()) echo '<option value="' . htmlspecialchars($row['dept']) . '">' . htmlspecialchars($row['dept']) . '</option>'; ?>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="programs" class="form-label">Program</label>
                     <select name="programs" class="form-select" id="programs" required>
                         <option value="" disabled selected>Select Program</option>
-                        <?php
-                        while ($row = $results2->fetch_assoc()) {
-                            echo '<option value="' . htmlspecialchars($row['programs']) . '">' . htmlspecialchars($row['programs']) . '</option>';
-                        }
-                        ?>
+                        <?php while ($row = $results2->fetch_assoc()) echo '<option value="' . htmlspecialchars($row['programs']) . '">' . htmlspecialchars($row['programs']) . '</option>'; ?>
                     </select>
                 </div>
-
                 <button class="btn btn-success mt-2 px-4" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
             </form>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+        document.getElementById('add-adviser-form').addEventListener('submit', function (e) {
+            const email = document.getElementById('email').value;
+            if (!email.endsWith('@lsu.edu.ph')) {
+                e.preventDefault();
+                alert('Email must end with @lsu.edu.ph');
+            }
+        });
+    </script>
 </body>
 
 </html>
